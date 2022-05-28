@@ -231,14 +231,80 @@
                     <view key="view" contentMode="scaleToFill" id="jCy-KQ-WVa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="8rV-xg-kvP">
+                                <rect key="frame" x="16" y="108" width="382" height="70"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="firstBaseline" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="HFB-TW-eXo">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="37"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Habit Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qON-ta-OEp">
+                                                <rect key="frame" x="0.0" y="0.0" width="158" height="37"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VJ8-Xh-cII">
+                                                <rect key="frame" x="330" y="18" width="52" height="14.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vV-TT-lXL">
+                                        <rect key="frame" x="0.0" y="53" width="382" height="17"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="OaR-jh-RA1">
+                                <rect key="frame" x="0.0" y="198" width="414" height="615"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="odd-8Y-ZcF">
+                                    <size key="itemSize" width="414" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UserCount" id="HPJ-bv-WSa" customClass="UICollectionViewListCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nIL-NP-Ggk">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="414" height="44"/>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="R6u-xj-gmG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="OaR-jh-RA1" firstAttribute="leading" secondItem="R6u-xj-gmG" secondAttribute="leading" id="9IX-Mb-XjF"/>
+                            <constraint firstItem="8rV-xg-kvP" firstAttribute="leading" secondItem="R6u-xj-gmG" secondAttribute="leading" constant="16" id="9yp-wh-2AK"/>
+                            <constraint firstItem="R6u-xj-gmG" firstAttribute="bottom" secondItem="OaR-jh-RA1" secondAttribute="bottom" id="LdL-Su-mnf"/>
+                            <constraint firstItem="OaR-jh-RA1" firstAttribute="top" secondItem="8rV-xg-kvP" secondAttribute="bottom" constant="20" id="XxS-WX-ke8"/>
+                            <constraint firstItem="R6u-xj-gmG" firstAttribute="trailing" secondItem="OaR-jh-RA1" secondAttribute="trailing" id="cgO-8v-UQ1"/>
+                            <constraint firstItem="8rV-xg-kvP" firstAttribute="top" secondItem="R6u-xj-gmG" secondAttribute="top" constant="20" id="g8o-Ry-IbV"/>
+                            <constraint firstItem="R6u-xj-gmG" firstAttribute="trailing" secondItem="8rV-xg-kvP" secondAttribute="trailing" constant="16" id="kyB-zn-aYn"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="MWZ-DN-v9j"/>
+                    <connections>
+                        <outlet property="categoryLabel" destination="VJ8-Xh-cII" id="M8X-bN-5WA"/>
+                        <outlet property="collectionView" destination="OaR-jh-RA1" id="20J-mz-zMW"/>
+                        <outlet property="infoLabel" destination="0vV-TT-lXL" id="yUf-HX-qHz"/>
+                        <outlet property="nameLabel" destination="qON-ta-OEp" id="ke6-Uu-zkx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eCI-5R-ngh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-181" y="1118"/>
+            <point key="canvasLocation" x="-181.15942028985509" y="1116.2946428571429"/>
         </scene>
         <!--User Detail View Controller-->
         <scene sceneID="Ijm-gJ-STt">

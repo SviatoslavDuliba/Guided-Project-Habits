@@ -5,13 +5,12 @@
 //  Created by Duliba Sviatoslav on 28.05.2022.
 //
 
-import Foundation
-
+import UIKit
+//MARK: - Structures
 struct HabitRequest: APIRequest {
     typealias Response = [String: Habit]
 
     var habitName: String?
-
     var path: String { "/habits" }
 }
 
@@ -25,7 +24,6 @@ struct HabitStatisticsRequest: APIRequest {
     typealias Response = [HabitStatistics]
 
     var habitNames: [String]?
-
     var path: String { "/habitStats" }
     var queryItems: [URLQueryItem]? {
         if let habitNames = habitNames {
@@ -41,7 +39,6 @@ struct UserStatisticsRequest: APIRequest {
     typealias Response = [UserStatistics]
 
     var userIDs: [String]?
-
     var path: String { "/userStats" }
 
     var queryItems: [URLQueryItem]? {
@@ -57,6 +54,18 @@ struct HabitLeadStatisticsRequest: APIRequest {
     typealias Response = UserStatistics
 
     var userID: String
-
     var path: String { "/userLeadingStats/\(userID)" }
+}
+
+struct ImageRequest: APIRequest {
+    typealias Response = UIImage
+
+    var imageID: String
+    var path: String { "/images/" + imageID }
+}
+
+struct CombinedStatisticsRequest: APIRequest {
+    typealias Response = CombinedStatistics
+
+    var path: String { "/combinedStats" }
 }

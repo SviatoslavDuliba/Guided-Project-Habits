@@ -6,12 +6,12 @@
 //
 
 import Foundation
-
+//MARK: - Structure
 struct Category {
     let name: String
     let color: Color
 }
-
+//MARK: - Extensions
 extension Category: Codable { }
 
 extension Category: Hashable {

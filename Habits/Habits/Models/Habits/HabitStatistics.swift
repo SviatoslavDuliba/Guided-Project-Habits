@@ -6,10 +6,10 @@
 //
 
 import Foundation
-
+//MARK: - Structure
 struct HabitStatistics {
     let habit: Habit
     let userCounts: [UserCount]
 }
-
+//MARK: - Extension
 extension HabitStatistics: Codable { }

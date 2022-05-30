@@ -6,11 +6,11 @@
 //
 
 import Foundation
-
+//MARK: - Structure
 struct UserCount {
     let user: User
     let count: Int
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(user)
     }
@@ -19,7 +19,7 @@ struct UserCount {
         return lhs.user == rhs.user
     }
 }
-
+//MARK: - Extensions
 extension UserCount: Codable { }
 
 extension UserCount: Hashable { }

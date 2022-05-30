@@ -6,12 +6,12 @@
 //
 
 import UIKit
+
 private let reuseIdentifier = "Cell"
+let favoriteHabitColor = UIColor(hue: 0.15, saturation: 1, brightness: 0.9, alpha: 1)
 
 class HabitCollectionViewController: UICollectionViewController {
-    
-    
-    
+    //MARK: - Properties
     var habitsRequestTask: Task<Void, Never>? = nil
     deinit { habitsRequestTask?.cancel() }
 
@@ -31,21 +31,30 @@ class HabitCollectionViewController: UICollectionViewController {
             case favorites
             case category(_ category: Category)
         
-            static func < (lhs: Section, rhs: Section) -> Bool {
-                switch (lhs, rhs) {
-                case (.category(let l), .category(let r)):
-                    return l.name < r.name
-                case (.favorites, _):
-                    return true
-                case (_, .favorites):
-                    return false
-                }
+    static func < (lhs: Section, rhs: Section) -> Bool {
+        switch (lhs, rhs) {
+            case (.category(let l), .category(let r)):
+                return l.name < r.name
+            case (.favorites, _):
+                return true
+            case (_, .favorites):
+                return false
             }
         }
+            
+    var sectionColor: UIColor {
+        switch self {
+            case .favorites:
+                return favoriteHabitColor
+            case .category(let category):
+                return category.color.uiColor
+            }
+        }
+    }
     
         typealias Item = Habit
     }
-    
+    //MARK: - Structures
     struct Model {
         var habitsByName = [String: Habit]()
         var favoriteHabits: [Habit] {
@@ -55,20 +64,25 @@ class HabitCollectionViewController: UICollectionViewController {
     
     var dataSource: DataSourceType!
     var model = Model()
+    //MARK: - Methods
+    func configureCell(_ cell: UICollectionViewListCell, withItem item:ViewModel.Item) {
+        var content = cell.defaultContentConfiguration()
+        content.text = item.name
+        cell.contentConfiguration = content
+    }
     
     func createDataSource() -> DataSourceType {
         let dataSource = DataSourceType(collectionView: collectionView) { (collectionView, indexPath, item) in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Habit", for: indexPath) as! UICollectionViewListCell
-            var content = cell.defaultContentConfiguration()
-            content.text = item.name
-            cell.contentConfiguration = content
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Habit", for: indexPath) as! UICollectionViewListCell
+    
+        self.configureCell(cell, withItem: item)
     
             return cell
         }
-        
+    
         dataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: SectionHeader.kind.identifier, withReuseIdentifier: SectionHeader.reuse.identifier, for: indexPath) as! NamedSectionHeaderView
-        
+
             let section = dataSource.snapshot().sectionIdentifiers[indexPath.section]
             switch section {
             case .favorites:
@@ -78,7 +92,7 @@ class HabitCollectionViewController: UICollectionViewController {
             }
         return header
         }
-        
+
         return dataSource
     }
     
@@ -134,7 +148,7 @@ class HabitCollectionViewController: UICollectionViewController {
         
         dataSource.applySnapshotUsing(sectionIDs: sectionIDs, itemsBySection: itemsBySection)
     }
-    
+    //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -150,39 +164,8 @@ class HabitCollectionViewController: UICollectionViewController {
     
         update()
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
-    
-        return cell
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath,
-                                 point: CGPoint) -> UIContextMenuConfiguration? {
+        
+    override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             let item = self.dataSource.itemIdentifier(for: indexPath)!
         
@@ -196,7 +179,7 @@ class HabitCollectionViewController: UICollectionViewController {
         
         return config
     }
-    
+    //MARK: - Action
     @IBSegueAction func showHabitDetail(_ coder: NSCoder, sender: UICollectionViewCell?) -> HabitDetailViewController? {
         guard let cell = sender,
                 let indexPath = collectionView.indexPath(for: cell),
@@ -206,37 +189,4 @@ class HabitCollectionViewController: UICollectionViewController {
         
         return HabitDetailViewController(coder: coder, habit: item)
     }
-    
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-
 }

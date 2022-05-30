@@ -7,15 +7,13 @@
 
 import UIKit
 
-
-
 class UserDetailViewController: UIViewController {
-    
+    //MARK: - Outlets
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var userNameLabel: UILabel!
     @IBOutlet var bioLabel: UILabel!
     @IBOutlet var collectionView: UICollectionView!
-    
+    //MARK: - Properties
     var imageRequestTask: Task<Void, Never>? = nil
     var userStatisticsRequestTask:Task<Void, Never>? = nil
     var habitLeadStatisticsRequestTask:Task<Void, Never>? = nil
@@ -41,21 +39,30 @@ class UserDetailViewController: UIViewController {
             case leading
             case category(_ category: Category)
     
-            static func < (lhs: Section, rhs: Section) -> Bool {
-                switch (lhs, rhs) {
-                case (.leading, .category), (.leading, .leading):
-                    return true
-                case (.category, .leading):
-                    return false
-                case (category(let category1), category(let category2)):
-                    return category1.name > category2.name
-                }
+    static func < (lhs: Section, rhs: Section) -> Bool {
+        switch (lhs, rhs) {
+            case (.leading, .category), (.leading, .leading):
+                return true
+            case (.category, .leading):
+                return false
+            case (category(let category1), category(let category2)):
+                return category1.name > category2.name
             }
         }
+            
+    var sectionColor: UIColor {
+        switch self {
+            case .leading:
+                return .systemGray4
+            case .category(let category):
+                return category.color.uiColor
+            }
+        }
+    }
     
         typealias Item = HabitCount
     }
-    
+    //MARK: - Structure
     struct Model {
         var userStats: UserStatistics?
         var leadingStats: UserStatistics?
@@ -74,7 +81,7 @@ class UserDetailViewController: UIViewController {
         self.user = user
         super.init(coder: coder)
     }
-    
+    //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,6 +93,22 @@ class UserDetailViewController: UIViewController {
         dataSource = createDataSource()
         collectionView.dataSource = dataSource
         collectionView.collectionViewLayout = createLayout()
+        
+        view.backgroundColor = user.color?.uiColor ?? .white
+        
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.backgroundColor = .quaternarySystemFill
+        tabBarController?.tabBar.scrollEdgeAppearance = tabBarAppearance
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.backgroundColor = .quaternarySystemFill
+        navigationItem.scrollEdgeAppearance = navBarAppearance
+        
+        imageRequestTask = Task {
+            if let image = try? await ImageRequest(imageID: user.id).send() {
+                self.profileImageView.image = image
+            }
+            imageRequestTask = nil
+        }
         
         update()
     }
@@ -106,39 +129,39 @@ class UserDetailViewController: UIViewController {
         updateTimer?.invalidate()
         updateTimer = nil
     }
-    
+    //MARK: - Methods
     func createDataSource() -> DataSourceType {
         let dataSource = DataSourceType(collectionView: collectionView) { (collectionView, indexPath, habitStat) -> UICollectionViewCell? in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HabitCount", for: indexPath) as! UICollectionViewListCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HabitCount", for: indexPath) as! UICollectionViewListCell
     
-                var content = UIListContentConfiguration.subtitleCell()
-                content.text = habitStat.habit.name
-                content.secondaryText = "\(habitStat.count)"
-                content.prefersSideBySideTextAndSecondaryText = true
-                content.textProperties.font = .preferredFont(forTextStyle: .headline)
-                content.secondaryTextProperties.font = .preferredFont(forTextStyle: .body)
-                cell.contentConfiguration = content
+        var content = UIListContentConfiguration.subtitleCell()
+            content.text = habitStat.habit.name
+            content.secondaryText = "\(habitStat.count)"
+            content.prefersSideBySideTextAndSecondaryText = true
+            content.textProperties.font = .preferredFont(forTextStyle: .headline)
+            content.secondaryTextProperties.font = .preferredFont(forTextStyle: .body)
+            cell.contentConfiguration = content
             return cell
         }
     
-        dataSource.supplementaryViewProvider = { (collectionView,
-           category, indexPath) in
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: SectionHeader.kind.identifier, withReuseIdentifier: SectionHeader.reuse.identifier,
-                                                                         for: indexPath) as! NamedSectionHeaderView
-    
-            let section = dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            switch section {
-                    case .leading:
-                        header.nameLabel.text = "Leading"
-                    case .category(let category):
-                        header.nameLabel.text = category.name
-                    }
+        dataSource.supplementaryViewProvider = { (collectionView, category, indexPath) in
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: SectionHeader.kind.identifier, withReuseIdentifier: SectionHeader.reuse.identifier, for: indexPath) as!                                                                                                                                                            NamedSectionHeaderView
             
-                    return header
-                }
+        let section = dataSource.snapshot().sectionIdentifiers[indexPath.section]
+        switch section {
+        case .leading:
+            header.nameLabel.text = "Leading"
+        case .category(let category):
+            header.nameLabel.text = category.name
+        }
             
-                return dataSource
-            }
+            header.backgroundColor = section.sectionColor
+
+        return header
+     }
+            
+        return dataSource
+ }
     
     func createLayout() -> UICollectionViewCompositionalLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
@@ -209,14 +232,4 @@ class UserDetailViewController: UIViewController {
     
         dataSource.applySnapshotUsing(sectionIDs: sectionIDs, itemsBySection: itemsBySection)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

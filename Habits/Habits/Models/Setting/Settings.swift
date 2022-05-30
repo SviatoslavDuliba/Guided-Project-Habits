@@ -8,15 +8,14 @@
 import Foundation
 
 enum Setting {
+//MARK: - Properties
     static let favoriteHabits = "favoriteHabits"
     static let followedUserIDs = "followedUserIDs"
 }
-
+//MARK: - Structure
 struct Settings {
     static var shared = Settings()
-
     private let defaults = UserDefaults.standard
-
 
 private func archiveJSON<T: Encodable>(value: T, key: String) {
     let data = try! JSONEncoder().encode(value)
@@ -73,5 +72,6 @@ private func unarchiveJSON<T: Decodable>(key: String) -> T? {
     
         followedUserIDs = updated
     }
-
+    
+    let currentUser = User(id: "activeUser", name: "Duliba Sviatosla", color: nil, bio: nil)
 }

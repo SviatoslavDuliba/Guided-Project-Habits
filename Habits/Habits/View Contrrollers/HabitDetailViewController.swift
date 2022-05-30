@@ -8,12 +8,12 @@
 import UIKit
 
 class HabitDetailViewController: UIViewController {
-
+//MARK: - Outlets
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var categoryLabel: UILabel!
     @IBOutlet var infoLabel: UILabel!
     @IBOutlet var collectionView: UICollectionView!
-    
+    //MARK: - Properties
     var habit: Habit!
     var updateTimer: Timer?
     
@@ -62,7 +62,7 @@ class HabitDetailViewController: UIViewController {
         self.habit = habit
         super.init(coder: coder)
     }
-
+//MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,7 +76,6 @@ class HabitDetailViewController: UIViewController {
         categoryLabel.text = habit.category.name
         infoLabel.text = habit.info
         
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,7 +98,7 @@ class HabitDetailViewController: UIViewController {
     
     var habitStatisticsRequestTask: Task<Void, Never>? = nil
     deinit { habitStatisticsRequestTask?.cancel() }
-    
+    //MARK: - Methods
     func update() {
         habitStatisticsRequestTask?.cancel()
         habitStatisticsRequestTask = Task {
@@ -131,10 +130,8 @@ class HabitDetailViewController: UIViewController {
             case .single(let userStat):
                 content.text = userStat.user.name
                 content.secondaryText = "\(userStat.count)"
-                content.textProperties.font = .preferredFont(forTextStyle:
-                   .headline)
-                content.secondaryTextProperties.font =
-                   .preferredFont(forTextStyle: .body)
+                content.textProperties.font = .preferredFont(forTextStyle: .headline)
+                content.secondaryTextProperties.font = .preferredFont(forTextStyle: .body)
             default:
                 break
             }
@@ -157,14 +154,4 @@ class HabitDetailViewController: UIViewController {
     
         return UICollectionViewCompositionalLayout(section: section)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -6,14 +6,14 @@
 //
 
 import Foundation
-
+//MARK: - Structure
 struct User {
     let id: String
     let name: String
     let color: Color?
     let bio: String?
 }
-
+//MARK: - Extensions
 extension User: Codable { }
 
 extension User: Hashable {

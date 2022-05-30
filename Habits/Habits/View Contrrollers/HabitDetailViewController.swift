@@ -15,6 +15,7 @@ class HabitDetailViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView!
     
     var habit: Habit!
+    var updateTimer: Timer?
     
     typealias DataSourceType = UICollectionViewDiffableDataSource<ViewModel.Section, ViewModel.Item>
     
@@ -77,6 +78,25 @@ class HabitDetailViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    
+        update()
+    
+        updateTimer = Timer.scheduledTimer(withTimeInterval: 1,
+           repeats: true) { _ in
+            self.update()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    
+        updateTimer?.invalidate()
+        updateTimer = nil
+    }
+    
     var habitStatisticsRequestTask: Task<Void, Never>? = nil
     deinit { habitStatisticsRequestTask?.cancel() }
     

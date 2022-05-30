@@ -29,6 +29,8 @@
 		49A2BF432842B59B00C00AD1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A2BF422842B59B00C00AD1 /* User.swift */; };
 		49A2BF452842C70600C00AD1 /* HabitStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A2BF442842C70600C00AD1 /* HabitStatistics.swift */; };
 		49A2BF472842C73100C00AD1 /* UserCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A2BF462842C73100C00AD1 /* UserCount.swift */; };
+		49A2BF492843486400C00AD1 /* UserStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A2BF482843486400C00AD1 /* UserStatistics.swift */; };
+		49A2BF4B2843489300C00AD1 /* HabitCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A2BF4A2843489300C00AD1 /* HabitCount.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +58,8 @@
 		49A2BF422842B59B00C00AD1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		49A2BF442842C70600C00AD1 /* HabitStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitStatistics.swift; sourceTree = "<group>"; };
 		49A2BF462842C73100C00AD1 /* UserCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCount.swift; sourceTree = "<group>"; };
+		49A2BF482843486400C00AD1 /* UserStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatistics.swift; sourceTree = "<group>"; };
+		49A2BF4A2843489300C00AD1 /* HabitCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCount.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,8 @@
 				49A2BF422842B59B00C00AD1 /* User.swift */,
 				49A2BF442842C70600C00AD1 /* HabitStatistics.swift */,
 				49A2BF462842C73100C00AD1 /* UserCount.swift */,
+				49A2BF482843486400C00AD1 /* UserStatistics.swift */,
+				49A2BF4A2843489300C00AD1 /* HabitCount.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -211,10 +217,12 @@
 				49A2BF412842AD2100C00AD1 /* NamedSectionHeaderView.swift in Sources */,
 				49A2BF3B2842A2EC00C00AD1 /* Settings.swift in Sources */,
 				49A2BF432842B59B00C00AD1 /* User.swift in Sources */,
+				49A2BF492843486400C00AD1 /* UserStatistics.swift in Sources */,
 				49A2BF2E2842898600C00AD1 /* UserDetailViewController.swift in Sources */,
 				49A2BF252842840C00C00AD1 /* HabitCollectionViewController.swift in Sources */,
 				49A2BF1128427DAF00C00AD1 /* SceneDelegate.swift in Sources */,
 				49A2BF452842C70600C00AD1 /* HabitStatistics.swift in Sources */,
+				49A2BF4B2843489300C00AD1 /* HabitCount.swift in Sources */,
 				49A2BF292842842F00C00AD1 /* LogHabitCollectionViewController.swift in Sources */,
 				49A2BF31284294EA00C00AD1 /* Habit.swift in Sources */,
 				49A2BF392842990B00C00AD1 /* APIService.swift in Sources */,

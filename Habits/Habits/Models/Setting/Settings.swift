@@ -8,15 +8,14 @@
 import Foundation
 
 enum Setting {
+//MARK: - Properties
     static let favoriteHabits = "favoriteHabits"
     static let followedUserIDs = "followedUserIDs"
 }
-
+//MARK: - Structure
 struct Settings {
     static var shared = Settings()
-
     private let defaults = UserDefaults.standard
-
 
 private func archiveJSON<T: Encodable>(value: T, key: String) {
     let data = try! JSONEncoder().encode(value)
@@ -41,4 +40,38 @@ private func unarchiveJSON<T: Decodable>(key: String) -> T? {
         }
     }
     
+    mutating func toggleFavorite(_ habit: Habit) {
+        var favorites = favoriteHabits
+    
+        if favorites.contains(habit) {
+            favorites = favorites.filter { $0 != habit }
+        } else {
+            favorites.append(habit)
+        }
+    
+        favoriteHabits = favorites
+    }
+    
+    var followedUserIDs: [String] {
+        get {
+            return unarchiveJSON(key: Setting.followedUserIDs) ?? []
+        }
+        set {
+            archiveJSON(value: newValue, key: Setting.followedUserIDs)
+        }
+    }
+    
+    mutating func toggleFollowed(user: User) {
+        var updated = followedUserIDs
+    
+        if updated.contains(user.id) {
+            updated = updated.filter { $0 != user.id }
+        } else {
+            updated.append(user.id)
+        }
+    
+        followedUserIDs = updated
+    }
+    
+    let currentUser = User(id: "activeUser", name: "Duliba Sviatosla", color: nil, bio: nil)
 }

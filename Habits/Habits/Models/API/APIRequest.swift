@@ -5,8 +5,8 @@
 //  Created by Duliba Sviatoslav on 28.05.2022.
 //
 
-import Foundation
-
+import UIKit
+//MARK: - Properties
 protocol APIRequest {
     associatedtype Response
 
@@ -20,7 +20,7 @@ extension APIRequest {
     var host: String { "localhost" }
     var port: Int { 8080 }
 }
-
+//MARK: - Extensions
 extension APIRequest {
     var queryItems: [URLQueryItem]? { nil }
     var postData: Data? { nil }
@@ -63,5 +63,37 @@ extension APIRequest where Response: Decodable {
         let decoded = try decoder.decode(Response.self, from: data)
 
         return decoded
+    }
+}
+    
+    enum ImageRequestError: Error {
+            case couldNotInitializeFromData
+            case imageDataMissing
+
+        }
+    
+    extension APIRequest where Response == UIImage {
+        func send() async throws -> UIImage {
+            let (data, response) = try await URLSession.shared.data(for: request)
+    
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                throw ImageRequestError.imageDataMissing
+            }
+    
+            guard let image = UIImage(data: data) else {
+                throw ImageRequestError.couldNotInitializeFromData
+            }
+    
+            return image
+        }
+    }
+
+extension APIRequest {
+    func send() async throws -> Void {
+        let (_, response) = try await URLSession.shared.data(for: request)
+
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw APIRequestError.requestFailed
+        }
     }
 }

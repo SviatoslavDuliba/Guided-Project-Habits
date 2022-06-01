@@ -52,6 +52,14 @@ class UserCollectionViewController: UICollectionViewController {
         
         update()
 
+        let tabBarAppearance = UITabBarAppearance()
+            tabBarAppearance.backgroundColor = .quaternarySystemFill
+            tabBarController?.tabBar.scrollEdgeAppearance = tabBarAppearance
+                
+        let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.backgroundColor = .quaternarySystemFill
+            navigationItem.scrollEdgeAppearance = navBarAppearance
+        
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
     }

@@ -14,7 +14,4 @@ class FollowedUserCollectionViewCell: UICollectionViewCell {
     @IBOutlet var separatorLineView: UIView!
     @IBOutlet var separatorLineHeightConstraint: NSLayoutConstraint!
     //MARK: - Methods
-    override func awakeFromNib() {
-        separatorLineHeightConstraint.constant = 1 / UITraitCollection.current.displayScale
-        }
-    }
+}

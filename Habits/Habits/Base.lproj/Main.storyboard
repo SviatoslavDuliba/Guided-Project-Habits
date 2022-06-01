@@ -153,7 +153,7 @@
         <!--Home-->
         <scene sceneID="HDL-hZ-XyU">
             <objects>
-                <collectionViewController id="RGr-Lu-gKE" customClass="HomeCollectionViewController" sceneMemberID="viewController">
+                <collectionViewController id="RGr-Lu-gKE" customClass="HomeCollectionCollectionViewController" customModule="Habits" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Ld7-18-3rx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -204,6 +204,11 @@
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <size key="customSize" width="316" height="128"/>
+                                <connections>
+                                    <outlet property="habitNameLabel" destination="Ryu-SJ-97B" id="Tt0-Uf-lVQ"/>
+                                    <outlet property="leaderLabel" destination="PDv-Gl-R3C" id="Dya-3N-bkK"/>
+                                    <outlet property="secondaryLabel" destination="2cr-O2-9qD" id="dTT-CS-JJn"/>
+                                </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="FollowedUser" id="g5A-cZ-s2E" customClass="FollowedUserCollectionViewCell" customModule="Habits" customModuleProvider="target">
                                 <rect key="frame" x="2.5" y="138" width="409" height="128"/>

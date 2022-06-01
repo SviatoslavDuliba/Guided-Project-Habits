@@ -90,6 +90,9 @@ class HabitCollectionViewController: UICollectionViewController {
             case .category(let category):
                 header.nameLabel.text = category.name
             }
+            
+            header.backgroundColor = section.sectionColor
+            
         return header
         }
 
